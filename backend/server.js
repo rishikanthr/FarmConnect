@@ -16,6 +16,7 @@ import consumerRoutes from "./routes/consumerRoute.js";
 import chatRoutes from "./routes/chatRoute.js";
 import predictRoute from "./routes/predictRoute.js";
 import aiRoute from "./routes/aiRoute.js";
+import cartRoute from "./routes/cartRoute.js";
 
 dotenv.config();
 
@@ -40,6 +41,7 @@ app.use("/api/consumer", consumerRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/predict", predictRoute);
 app.use("/api/ai", aiRoute);
+app.use("/api/cart", cartRoute);
 
 // ────────────── HTTP + Socket.IO setup ────────────
 const httpServer = http.createServer(app);

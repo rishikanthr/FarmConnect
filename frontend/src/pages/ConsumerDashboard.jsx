@@ -6,6 +6,7 @@ import AllProducts from "../components/AllProducts";
 import SearchByTitle from "../components/SearchByTitle";
 import SearchByFarmerId from "../components/SearchByFarmerId";
 import LogOutButton from "../components/LogOutButton";
+import CartButton from "../components/CartButton";
 
 const ConsumerDashboard = () => {
   const [consumerData, setConsumerData] = useState(null);
@@ -40,6 +41,7 @@ const ConsumerDashboard = () => {
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold text-blue-700">Consumer Dashboard</h1>
         <div className="flex gap-3">
+          <CartButton /> {/* 🛒 Add this first */}
           <button
             onClick={() => navigate("/chat")}
             className="bg-indigo-600 text-white px-4 py-1 rounded hover:bg-indigo-700"
