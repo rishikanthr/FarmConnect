@@ -3,25 +3,43 @@ import axios from "axios";
 
 const AddToCartButton = ({ userId, productId }) => {
   const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   const handleAdd = async () => {
     if (!userId) return alert("Please login to add to cart.");
     setLoading(true);
-    try {   
-      await axios.post("http://localhost:3000/api/cart/add", { userId, productId });
+    try {
+      await axios.post("http://localhost:3000/api/cart/add", {
+        userId,
+        productId,
+        quantity,
+      });
       alert("Added to cart");
     } catch (err) {
-      console.error("Add to cart error:", err);
-      alert("Failed to add to cart");
+      alert("Failed to add");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <button onClick={handleAdd} disabled={loading} className="bg-blue-600 text-white px-3 py-1 rounded">
-      {loading ? "Adding…" : "Add to Cart"}
-    </button>
+    <div className="flex gap-2 items-center mt-2">
+      <input
+        type="number"
+        step="0.1"
+        min="0.1"
+        value={quantity}
+        onChange={(e) => setQuantity(parseFloat(e.target.value))}
+        className="w-20 border px-2 py-1 rounded"
+      />
+      <button
+        onClick={handleAdd}
+        disabled={loading}
+        className="bg-blue-600 text-white px-3 py-1 rounded"
+      >
+        {loading ? "Adding…" : "Add to Cart"}
+      </button>
+    </div>
   );
 };
 

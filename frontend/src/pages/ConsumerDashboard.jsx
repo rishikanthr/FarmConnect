@@ -7,6 +7,8 @@ import SearchByTitle from "../components/SearchByTitle";
 import SearchByFarmerId from "../components/SearchByFarmerId";
 import LogOutButton from "../components/LogOutButton";
 import CartButton from "../components/CartButton";
+import WalletSection from "../components/WalletSection";
+import AddToCartButton from "../components/AddToCartButton"; // Not used here, but can be used in SearchByTitle
 
 const ConsumerDashboard = () => {
   const [consumerData, setConsumerData] = useState(null);
@@ -48,6 +50,7 @@ const ConsumerDashboard = () => {
           >
             Chat
           </button>
+          <WalletSection userId={consumerData.id} />
           <LogOutButton />
         </div>
       </div>

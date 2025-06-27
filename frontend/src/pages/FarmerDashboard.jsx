@@ -5,6 +5,7 @@ import AddProduct from "../components/AddProduct";
 import LogoutButton from "../components/LogOutButton";
 import ImagePredictor from "../components/ImagePredictor";
 import AskAI from "../components/AskAI";
+import WalletSection from "../components/WalletSection";
 
 const FarmerDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
@@ -65,6 +66,7 @@ const FarmerDashboard = () => {
           >
             Chat
           </button>
+          <WalletSection userId={profile._id} />
           <LogoutButton />
         </div>
       </div>
