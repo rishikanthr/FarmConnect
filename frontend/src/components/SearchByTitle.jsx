@@ -7,7 +7,7 @@ const SearchByTitle = () => {
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user")); // ✅ Get user info
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleSearch = async (e) => {
     e?.preventDefault();
@@ -33,57 +33,69 @@ const SearchByTitle = () => {
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4 text-indigo-700 text-center">
-        🔍 Search Products by Title
-      </h2>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-blue-50 to-purple-100 p-8">
+      <div className="max-w-6xl mx-auto space-y-10">
+        {/* Title */}
+        <h2 className="text-center text-4xl font-bold text-indigo-800">
+          🔍 Search Products by Title
+        </h2>
 
-      <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3 mb-6 items-center justify-center">
-        <input
-          type="text"
-          placeholder="Enter product title..."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="border rounded px-4 py-2 w-full md:w-1/2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        />
-        <button
-          type="submit"
-          className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700"
+        {/* Form */}
+        <form
+          onSubmit={handleSearch}
+          className="flex flex-col md:flex-row justify-center items-center gap-4"
         >
-          {loading ? "Searching…" : "Search"}
-        </button>
-      </form>
+          <input
+            type="text"
+            placeholder="Enter product title..."
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="w-full md:w-1/2 px-4 py-3 border border-indigo-300 rounded-xl focus:ring-2 focus:ring-indigo-500 shadow-sm"
+          />
+          <button
+            type="submit"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-xl shadow-lg transition"
+          >
+            {loading ? "Searching…" : "Search"}
+          </button>
+        </form>
 
-      {error && <p className="text-red-600 text-center mb-4">{error}</p>}
-      {!loading && !error && results.length === 0 && (
-        <p className="text-gray-500 text-center">No products to display.</p>
-      )}
+        {/* Error & Empty */}
+        {error && <p className="text-center text-red-600 text-lg">{error}</p>}
+        {!loading && !error && results.length === 0 && (
+          <p className="text-center text-gray-500">No products found.</p>
+        )}
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {results.map((p) => (
-          <div key={p._id} className="border rounded-lg shadow bg-white overflow-hidden">
-            <img
-              src={p.imageURL || "/no-image.png"}
-              alt={p.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-800">{p.title}</h3>
-              <p className="text-sm text-gray-600 mb-2">{p.description}</p>
-              <p className="text-green-800 font-semibold mb-1">₹{p.price}</p>
-              <p className="text-sm">Stock: <strong>{p.stock || "N/A"}</strong></p>
-              <p className="text-sm">
-                Organic:{" "}
-                <span className={p.certifiedOrganic ? "text-green-600" : "text-red-500"}>
-                  {p.certifiedOrganic ? "Yes ✅" : "No ❌"}
-                </span>
-              </p>
-              <div className="mt-3">
-                <AddToCartButton userId={user?.id} productId={p._id} />
+        {/* Results */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {results.map((p) => (
+            <div
+              key={p._id}
+              className="bg-white/80 border border-gray-200 rounded-2xl shadow-lg hover:shadow-xl transition overflow-hidden"
+            >
+              <img
+                src={p.imageURL || "/no-image.png"}
+                alt={p.title}
+                className="w-full h-48 object-cover rounded-t-2xl"
+              />
+              <div className="p-5 space-y-2">
+                <h3 className="text-xl font-semibold text-gray-800">{p.title}</h3>
+                <p className="text-sm text-gray-600">{p.description}</p>
+                <p className="text-green-700 font-bold text-lg">₹{p.price}</p>
+                <p className="text-sm">Stock: <strong>{p.stock || "N/A"}</strong></p>
+                <p className="text-sm">
+                  Organic:{" "}
+                  <span className={p.certifiedOrganic ? "text-green-600" : "text-red-500"}>
+                    {p.certifiedOrganic ? "Yes ✅" : "No ❌"}
+                  </span>
+                </p>
+                <div className="pt-3">
+                  <AddToCartButton userId={user?.id} productId={p._id} />
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

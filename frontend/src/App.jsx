@@ -14,6 +14,7 @@ import FarmerProductsPage from "./pages/FarmerProductsPage";
 import AskAI from "./components/AskAI";
 import ImagePredictor from "./components/ImagePredictor";
 import WalletPage from "./pages/WalletPage";
+import AllProducts from "./components/AllProducts";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -43,7 +44,9 @@ const App = () => {
           <Route path="/farmer/products" element={<FarmerProductsPage />} />
           <Route path="/farmer/disease-predictor" element={<ImagePredictor />} />
           <Route path="/farmer/ai-assistant" element={<AskAI />} />
+          <Route path="/ask-ai" element={<AskAI />} />
           <Route path="/wallet" element={<WalletPage />} />
+          <Route path="/all-products" element={<AllProducts />} />  
         </Routes>
       </Router>
   );

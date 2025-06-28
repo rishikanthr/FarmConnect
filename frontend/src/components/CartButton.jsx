@@ -5,9 +5,9 @@ const CartButton = () => {
   return (
     <Link
       to="/cart"
-      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
+      className="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-400 to-yellow-500 text-white font-semibold px-5 py-3 rounded-xl shadow-md hover:shadow-lg hover:from-yellow-500 hover:to-yellow-600 transform transition-all duration-300 hover:-translate-y-1"
     >
-      🛒 View Cart
+      🛒 <span>View Cart</span>
     </Link>
   );
 };

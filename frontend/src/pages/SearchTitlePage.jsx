@@ -1,28 +1,32 @@
-import SearchByTitle from "../components/SearchByTitle";
+import SearchByFarmer from "../components/SearchByFarmerId";
 import CartButton from "../components/CartButton";
 import { useNavigate } from "react-router-dom";
 
-const SearchTitlePage = () => {
+const SearchFarmerPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="max-w-5xl mx-auto p-6 space-y-6">
-      <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-bold text-indigo-700">🔍 Search by Title</h1>
-        <div className="flex gap-3">
-          <CartButton />
-          <button
-            onClick={() => navigate(-1)}
-            className="bg-gray-200 text-gray-800 px-3 py-1 rounded hover:bg-gray-300"
-          >
-            ← Back
-          </button>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-lime-50 to-emerald-100 p-8">
+      <div className="max-w-5xl mx-auto space-y-8">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <h1 className="text-3xl font-bold text-green-800">🔍 Search Products by Farmer</h1>
+          <div className="flex gap-4">
+            <CartButton />
+            <button
+              onClick={() => navigate(-1)}
+              className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-xl shadow-md transition-all"
+            >
+              ← Back
+            </button>
+          </div>
+        </div>
+
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl p-6 shadow-xl border border-white/50">
+          <SearchByFarmer />
         </div>
       </div>
-
-      <SearchByTitle />
     </div>
   );
 };
 
-export default SearchTitlePage;
+export default SearchFarmerPage;
