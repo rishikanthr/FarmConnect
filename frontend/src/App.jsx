@@ -1,6 +1,5 @@
 // src/App.jsx
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { CartProvider } from "./contexts/CartContext";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,12 +8,17 @@ import ConsumerDashboard from "./pages/ConsumerDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import ChatPage from "./pages/ChatPage";
 import CartPage from "./pages/CartPage";
+import SearchTitlePage from "./pages/SearchTitlePage";
+import SearchFarmerPage from "./pages/SearchFarmerPage";
+import FarmerProductsPage from "./pages/FarmerProductsPage";
+import AskAI from "./components/AskAI";
+import ImagePredictor from "./components/ImagePredictor";
+import WalletPage from "./pages/WalletPage";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   return (
-    <CartProvider userId={user?._id}>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -34,9 +38,14 @@ const App = () => {
           />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/search-title" element={<SearchTitlePage />} />
+          <Route path="/search-farmer" element={<SearchFarmerPage />} />
+          <Route path="/farmer/products" element={<FarmerProductsPage />} />
+          <Route path="/farmer/disease-predictor" element={<ImagePredictor />} />
+          <Route path="/farmer/ai-assistant" element={<AskAI />} />
+          <Route path="/wallet" element={<WalletPage />} />
         </Routes>
       </Router>
-    </CartProvider>
   );
 };
 

@@ -16,10 +16,7 @@ const ImagePredictor = () => {
   };
 
   const handleUpload = async () => {
-    if (!file) {
-      setError("Please select an image.");
-      return;
-    }
+    if (!file) return setError("Please select an image.");
 
     const formData = new FormData();
     formData.append("file", file);
@@ -36,30 +33,34 @@ const ImagePredictor = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-lg border border-gray-200">
-      <h2 className="text-2xl font-bold text-green-700 mb-4 text-center">🌿 Plant Disease Detector</h2>
+    <div className="max-w-xl mx-auto mt-12 p-6 bg-white shadow-2xl rounded-2xl border border-gray-200">
+      <h2 className="text-3xl font-bold text-green-700 text-center mb-6">🦠 Disease Predictor</h2>
 
       <input
         type="file"
         accept="image/*"
         onChange={handleFileChange}
         className="block w-full text-sm text-gray-700 mb-4 file:mr-4 file:py-2 file:px-4
-        file:rounded-md file:border-0 file:text-sm file:font-semibold
-        file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+          file:rounded-md file:border-0 file:text-sm file:font-semibold
+          file:bg-green-100 file:text-green-700 hover:file:bg-green-200 transition"
       />
 
       {preview && (
         <div className="mb-4">
-          <p className="text-sm text-gray-600">🖼️ Preview:</p>
-          <img src={preview} alt="Preview" className="mt-1 w-full rounded-md border border-gray-200" />
+          <p className="text-sm text-gray-600 font-medium">🖼️ Preview:</p>
+          <img
+            src={preview}
+            alt="Preview"
+            className="mt-2 w-full h-60 object-cover rounded-md border border-gray-300 shadow-sm"
+          />
         </div>
       )}
 
       <button
         onClick={handleUpload}
-        className="w-full py-2 px-4 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-md transition"
+        className="w-full py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg transition"
       >
-        Upload & Predict
+        🔍 Predict Disease
       </button>
 
       {error && (

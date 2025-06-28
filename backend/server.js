@@ -5,7 +5,9 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import http from "http";
+import path from "path";
 import { Server as SocketIOServer } from "socket.io";
+import Chat from "./models/chat.js"; // import Chat model
 
 // route files
 import authRoutes from "./routes/authRoute.js";
@@ -44,16 +46,28 @@ app.use("/api/predict", predictRoute);
 app.use("/api/ai", aiRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/wallet", walletRoutes);
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 // ────────────── HTTP + Socket.IO setup ────────────
 const httpServer = http.createServer(app);
 io = new SocketIOServer(httpServer, { cors: { origin: "*" } });
 
 io.on("connection", (socket) => {
-  console.log("🔌 socket connected", socket.id);      // <== D
   socket.on("join", (userId) => {
     socket.join(userId);
-    console.log("🏠 joined room", userId, "socket", socket.id); // <== E
+  });
+
+  socket.on("sendMessage", async (msgData) => {
+    const saved = await Chat.create({ ...msgData, delivered: true });
+    io.to(msgData.receiverId).emit("newMessage", saved);
+  });
+
+  socket.on("markSeen", async ({ senderId, receiverId }) => {
+    await Chat.updateMany(
+      { senderId, receiverId, seen: false },
+      { $set: { seen: true } }
+    );
+    io.to(senderId).emit("messagesSeen", { from: receiverId });
   });
 });
 

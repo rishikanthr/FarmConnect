@@ -4,7 +4,7 @@ import AddToCartButton from "./AddToCartButton";
 
 const AllProducts = () => {
   const [products, setProducts] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user")); // ✅ Get user info
+  const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios
@@ -14,35 +14,57 @@ const AllProducts = () => {
   }, []);
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-6 text-green-700 text-center">🌿 All Farm Products</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section className="py-10 px-6 max-w-7xl mx-auto">
+      <h2 className="text-3xl font-extrabold text-green-700 mb-10 text-center tracking-wide">
+        🌾 Explore All Farm Fresh Products
+      </h2>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((p) => (
-          <div key={p._id} className="border rounded-lg shadow-md overflow-hidden bg-white">
-            <img
-              src={p.imageUrl || "/no-image.png"}
-              alt={p.title}
-              className="w-full h-48 object-cover"
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-semibold mb-1 text-gray-800">{p.title}</h3>
-              <p className="text-sm text-gray-600 mb-2">{p.description}</p>
-              <div className="text-sm font-medium text-green-800 mb-1">₹{p.price}</div>
-              <div className="text-sm">Stock: <span className="font-medium">{p.stock}</span></div>
-              <div className="text-sm">
-                Organic:{" "}
-                <span className={p.certifiedOrganic ? "text-green-600" : "text-red-500"}>
-                  {p.certifiedOrganic ? "Yes ✅" : "No ❌"}
+          <div
+            key={p._id}
+            className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden border border-gray-100"
+          >
+            <div className="relative w-full h-56 overflow-hidden">
+              <img
+                src={p.imageURL || "/no-image.png"}
+                alt={p.title}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+
+            <div className="p-5 space-y-2">
+              <h3 className="text-xl font-semibold text-gray-800 truncate">{p.title}</h3>
+              <p className="text-sm text-gray-500 h-10 overflow-hidden">{p.description}</p>
+
+              <div className="flex justify-between items-center">
+                <span className="text-green-700 font-bold text-lg">₹{p.price}</span>
+                <span className="text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                  Stock: <strong>{p.stock}</strong>
                 </span>
               </div>
-              <div className="mt-3">
+
+              <div>
+                <span className="text-sm">
+                  Organic:
+                  <span
+                    className={`ml-1 font-semibold ${
+                      p.certifiedOrganic ? "text-green-600" : "text-red-500"
+                    }`}
+                  >
+                    {p.certifiedOrganic ? "Yes ✅" : "No ❌"}
+                  </span>
+                </span>
+              </div>
+
+              <div className="pt-3">
                 <AddToCartButton userId={user?.id} productId={p._id} />
               </div>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

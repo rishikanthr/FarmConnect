@@ -63,7 +63,7 @@ const SearchByTitle = () => {
         {results.map((p) => (
           <div key={p._id} className="border rounded-lg shadow bg-white overflow-hidden">
             <img
-              src={p.imageUrl || "/no-image.png"}
+              src={p.imageURL || "/no-image.png"}
               alt={p.title}
               className="w-full h-48 object-cover"
             />

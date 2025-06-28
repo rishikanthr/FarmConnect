@@ -8,48 +8,44 @@ export default function AskAI() {
 
   const handleAsk = async () => {
     if (!question.trim()) return;
-
     setLoading(true);
     setAnswer("");
 
     try {
       const res = await axios.post("http://localhost:3000/api/ai", { question });
-      //console.log(question);
-      console.log(res.data);
       setAnswer(res.data.answer);
-    } catch (err) { 
-      //console.log("Error fetching answer:", err);
-      setAnswer("❌ Failed to fetch answer. Please try again.");
+    } catch (err) {
       console.error(err);
+      setAnswer("❌ Failed to fetch answer. Please try again.");
     }
 
     setLoading(false);
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
-      <h2 className="text-2xl font-bold mb-4 text-center">🧠 Ask AI - Agriculture Assistant</h2>
+    <div className="max-w-xl mx-auto mt-12 p-6 bg-white shadow-2xl rounded-2xl border border-gray-200">
+      <h2 className="text-3xl font-bold mb-6 text-center text-indigo-700">🤖 Ask AI Assistant</h2>
 
       <textarea
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
-        placeholder="Ask about plant disease, farming tips, etc."
-        className="w-full p-3 border border-gray-300 rounded mb-4"
-        rows={4}
+        placeholder="Ask about plant care, weather advice, crop diseases, etc."
+        className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400 transition"
+        rows={5}
       />
 
       <button
         onClick={handleAsk}
         disabled={loading}
-        className="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded"
+        className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-6 w-full rounded transition"
       >
-        {loading ? "Thinking..." : "Ask AI"}
+        {loading ? "💬 Thinking..." : "Ask Question"}
       </button>
 
       {answer && (
-        <div className="mt-6 p-4 bg-gray-100 rounded text-gray-800 whitespace-pre-line">
-          <strong>Answer:</strong>
-          <p>{answer}</p>
+        <div className="mt-6 p-4 bg-indigo-50 border border-indigo-200 rounded-md text-gray-800">
+          <h3 className="font-semibold text-indigo-700 mb-2">📝 AI Response</h3>
+          <p className="whitespace-pre-line">{answer}</p>
         </div>
       )}
     </div>

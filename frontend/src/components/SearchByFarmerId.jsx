@@ -3,7 +3,7 @@ import axios from "axios";
 
 const SearchByFarmer = () => {
   const [query, setQuery] = useState("");
-  const [mode, setMode] = useState("id");    // 'id' or 'name'
+  const [mode, setMode] = useState("id"); // 'id' or 'name'
   const [products, setProducts] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -83,12 +83,24 @@ const SearchByFarmer = () => {
         <p className="text-gray-500">No products to display.</p>
       )}
 
-      <ul className="mt-4 space-y-4">
+      <ul className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((p) => (
-          <li key={p._id} className="border p-4 rounded shadow">
-            <h3 className="text-lg font-bold">{p.title}</h3>
-            <p>{p.description}</p>
-            <p>₹{p.price}</p>
+          <li key={p._id} className="border p-4 rounded shadow bg-white">
+            <img
+              src={p.imageURL || "/no-image.png"}
+              alt={p.title}
+              className="w-full h-48 object-cover rounded mb-2"
+            />
+            <h3 className="text-lg font-bold text-gray-800">{p.title}</h3>
+            <p className="text-gray-600 text-sm">{p.description}</p>
+            <p className="text-green-800 font-semibold mt-1">₹{p.price}</p>
+            <p className="text-sm">Stock: {p.stock}</p>
+            <p className="text-sm">
+              Organic:{" "}
+              <span className={p.certifiedOrganic ? "text-green-600" : "text-red-500"}>
+                {p.certifiedOrganic ? "Yes ✅" : "No ❌"}
+              </span>
+            </p>
           </li>
         ))}
       </ul>

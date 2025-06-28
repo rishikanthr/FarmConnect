@@ -5,10 +5,11 @@ import authenticateUser from "../middleware/authUser.js";
 import authenticateFarmer from "../middleware/authFarmer.js";
 import authenticateAdmin from "../middleware/authAdmin.js";
 import { deleteProductFarmer, deleteProductAdmin } from "../controllers/productController.js    ";
+import upload from "../middleware/upload.js";
 
 const router = express.Router();
 
-router.post("/add", authenticateFarmer, addProduct);
+router.post("/add", authenticateFarmer, upload.single("image"), addProduct);
 router.get("/getAll", getAllProducts);
 router.get('/by-title/:title', getProductsByTitle);
 router.get("/getByFarmer/:farmerId", getProductsByFarmer);

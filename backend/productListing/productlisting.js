@@ -1,11 +1,11 @@
 import Product from "../models/product.js";
 import User from "../models/user.js";
+import path from "path";
 
-
+/* Add new product with image upload */
 export const addProduct = async (req, res) => {
   try {
-    // 🔑 TAKE THE ID FROM JWT, NOT FROM THE BODY
-    const farmerId = req.user.id;        // set by auth middleware
+    const farmerId = req.user.id;
 
     const {
       title,
@@ -13,15 +13,18 @@ export const addProduct = async (req, res) => {
       price,
       stock,
       category,
-      imageURL,
       certifiedOrganic,
     } = req.body;
 
-    // Confirm this user really is a farmer
     const farmer = await User.findById(farmerId);
     if (!farmer || farmer.role !== "farmer") {
       return res.status(403).json({ error: "Only farmers can add products" });
     }
+
+    // Get image path
+    const imageURL = req.file
+      ? `http://localhost:3000/uploads/${req.file.filename}`
+      : "";
 
     const newProduct = new Product({
       farmerId,
@@ -30,17 +33,21 @@ export const addProduct = async (req, res) => {
       price,
       stock,
       category,
-      imageURL,
       certifiedOrganic,
+      imageURL,
     });
 
     await newProduct.save();
+    console.log("New product added:", newProduct);
     res.status(201).json(newProduct);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: err.message });
   }
 };
+
+/* Other existing functions like getAllProducts, getProductsByFarmer, etc. remain unchanged */
+
 
 
 // Get all products
