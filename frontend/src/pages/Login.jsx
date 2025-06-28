@@ -128,9 +128,6 @@ const Login = () => {
                 <Link to="/register" className="hover:underline block">
                   🌱 Don’t have an account? Register
                 </Link>
-                <Link to="/forgot-password" className="hover:underline block mt-1">
-                  🔐 Forgot password?
-                </Link>
               </div>
             </div>
           </div>

@@ -28,6 +28,9 @@ export const addProduct = async (req, res) => {
 
     const newProduct = new Product({
       farmerId,
+      farmerName: farmer.name,            // ✅ embed farmer name
+      farmerEmail: farmer.email,          // ✅ embed farmer email
+      farmerLocation: farmer.location,    // ✅ embed farmer location
       title,
       description,
       price,
@@ -38,16 +41,15 @@ export const addProduct = async (req, res) => {
     });
 
     await newProduct.save();
-    console.log("New product added:", newProduct);
+    console.log("✅ New product added:", newProduct);
     res.status(201).json(newProduct);
   } catch (err) {
-    console.error(err);
+    console.error("❌ Error adding product:", err.message);
     res.status(500).json({ error: err.message });
   }
 };
 
 /* Other existing functions like getAllProducts, getProductsByFarmer, etc. remain unchanged */
-
 
 
 // Get all products
