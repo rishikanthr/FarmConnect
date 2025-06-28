@@ -1,8 +1,8 @@
 // backend/scripts/farmerEmbedInfo.js
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import Product from "../models/Product.js";
-import User from "../models/User.js";
+import Product from "../models/product.js";
+import User from "../models/user.js";
 
 dotenv.config();
 
@@ -15,7 +15,6 @@ if (!MONGO_URI) {
 const enrichProductsWithFarmerInfo = async () => {
   try {
     await mongoose.connect(MONGO_URI);
-    console.log("✅ Connected to MongoDB");
 
     const products = await Product.find();
 
@@ -32,11 +31,9 @@ const enrichProductsWithFarmerInfo = async () => {
       product.farmerLocation = farmer.location;
 
       await product.save();
-      console.log(`✅ Updated ${product.title} with farmer info`);
     }
 
     await mongoose.disconnect();
-    console.log("✅ Done.");
   } catch (err) {
     console.error("❌ Error:", err);
     process.exit(1);

@@ -26,9 +26,6 @@ router.post("/", upload.single("file"), async (req, res) => {
       },
     });
 
-    console.log("✅ Image uploaded:", originalName);
-    console.log("📈 Prediction:", response.data);
-
     fs.unlinkSync(filePath); // delete temp file
     res.json(response.data);
   } catch (err) {

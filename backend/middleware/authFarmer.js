@@ -16,8 +16,7 @@ const authenticateFarmer = async (req, res, next) => {
   try {
     // 1) Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("Decoded Token:", decoded);
-
+  
     // 2) Check role
     if (decoded.role !== "farmer") {
       return res.status(403).json({ error: "Access denied: Farmers only." });

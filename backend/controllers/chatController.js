@@ -5,17 +5,14 @@ import mongoose from "mongoose";
 /* Send a new message */
 export const sendMessage = async (req, res) => {
   try {
-    console.log("♻️  reached controller, body=", req.body);      // <== A
     const newMsg = await Chat.create({
       senderId: req.user.id,
       receiverId: req.body.recipientId,
       message: req.body.message,
     });
-    console.log("💾 new message saved _id=", newMsg._id);         // <== B
 
     req.io.to(req.user.id).emit("newMessage", newMsg);
     req.io.to(req.body.recipientId).emit("newMessage", newMsg);
-    console.log("📡 emitted to rooms", req.user.id, req.body.recipientId); // <== C
 
     res.status(201).json(newMsg);
   } catch (err) {

@@ -28,7 +28,6 @@ router.delete(
   authenticateUser,
   authenticateAdmin,
   (req, res, next) => {
-    console.log(">>> reached admin delete route", req.params.productId);
     next();
   },
   deleteProductAdmin

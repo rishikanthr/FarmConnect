@@ -15,6 +15,8 @@ const AllProducts = ({ showCartButton = true }) => {
       .catch((err) => console.error("Product fetch error:", err));
   }, []);
 
+  const isAdmin = user?.role === "admin";
+
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       {/* Title & Cart Button */}
@@ -25,7 +27,8 @@ const AllProducts = ({ showCartButton = true }) => {
             Farm Fresh Products
           </span>
         </h2>
-        {showCartButton && <CartButton />}
+        {/* ✅ Only show cart button if not admin and allowed by props */}
+        {showCartButton && !isAdmin && <CartButton />}
       </div>
 
       {/* Products Grid */}
@@ -82,9 +85,12 @@ const AllProducts = ({ showCartButton = true }) => {
                 </p>
               </div>
 
-              <div className="pt-3 flex justify-end">
-                <AddToCartButton userId={user?.id} productId={p._id} />
-              </div>
+              {/* ✅ Show Add to Cart only if not admin */}
+              {!isAdmin && (
+                <div className="pt-3 flex justify-end">
+                  <AddToCartButton userId={user?.id} productId={p._id} />
+                </div>
+              )}
             </div>
           </div>
         ))}

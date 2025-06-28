@@ -14,10 +14,8 @@ for (const product of products) {
     if (farmer) {
       product.farmerId = farmer._id;
       await product.save();
-      console.log(`Fixed product ${product.title}`);
     }
   }
 }
 
-console.log("✅ Conversion complete");
 process.exit();

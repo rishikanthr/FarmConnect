@@ -10,7 +10,6 @@ export const getConsumerDashboard = async (req, res) => {
     if (!user || user.role !== "consumer") {
       return res.status(403).json({ message: "Access denied: Consumers only" });
     }
-    console.log("Consumer dashboard user:", user);
     res.json({
       message: "Welcome to your Consumer Dashboard",
       id: user._id,

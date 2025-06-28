@@ -1,123 +1,80 @@
-import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import AllProducts from "../components/AllProducts";
 import LogOutButton from "../components/LogOutButton";
-import AdminUserManager from "../components/AdminUserManager"; // if you have the manager
+import AllProducts from "../components/AllProducts"; // This shows the full product list
 
 const AdminDashboard = () => {
-  const [consumers, setConsumers] = useState([]);
-  const [farmers, setFarmers] = useState([]);
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState("");
 
   const token = localStorage.getItem("token");
 
-  const fetchAdminData = async () => {
+  const fetchProducts = async () => {
     try {
-      const [consRes, farmRes, prodRes] = await Promise.all([
-        axios.get("http://localhost:3000/api/admin/allConsumers", {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get("http://localhost:3000/api/admin/allFarmers", {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-        axios.get("http://localhost:3000/api/admin/allProducts", {
-          headers: { Authorization: `Bearer ${token}` },
-        }),
-      ]);
-
-      setConsumers(consRes.data);
-      setFarmers(farmRes.data);
-      setProducts(prodRes.data);
+      const res = await axios.get("http://localhost:3000/api/admin/allProducts", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setProducts(res.data);
     } catch (err) {
-      console.error("Admin Dashboard Error:", err.message);
-      setError("Failed to load admin data");
+      console.error("Error fetching products:", err);
     }
   };
-
-  // 🔴 Delete any product
-  const deleteProduct = async (id) => {
-  const token = localStorage.getItem("token");
-    try {
-      await axios.delete(
-        `http://localhost:3000/api/products/admin/delete/${id}`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      // remove locally so UI updates instantly
-      setProducts((prev) => prev.filter((p) => p._id !== id));
-    } catch (e) {
-      console.error("Deletion failed:", e.response?.data || e.message);
-    }
-  };
-
 
   useEffect(() => {
-    fetchAdminData();
+    fetchProducts();
   }, []);
 
-  if (error) return <div className="text-red-500 p-4">{error}</div>;
-  if (!consumers.length && !farmers.length && !products.length)
-    return <div className="text-gray-500 p-4">Loading admin data...</div>;
-
   return (
-    <div className="p-6 max-w-6xl mx-auto">
+    <div className="min-h-screen p-6 max-w-7xl mx-auto bg-gradient-to-br from-white via-green-50 to-emerald-50">
       {/* Header */}
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-blue-700">Admin Dashboard</h1>
         <LogOutButton />
       </div>
 
-      {/* Quick stats */}
-      <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-xl font-semibold mb-2 text-green-700">
-            Consumers ({consumers.length})
-          </h2>
-          <ul className="space-y-1 text-sm">
-            {consumers.map((c) => (
-              <li key={c._id}>{c.name} - {c.email}</li>
-            ))}
-          </ul>
+      {/* Navigation Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div
+          onClick={() => navigate("/admin/consumers")}
+          className="cursor-pointer bg-gradient-to-br from-green-100 to-lime-100 p-6 rounded-lg shadow hover:shadow-xl transition"
+        >
+          <h2 className="text-xl font-bold text-green-800 mb-2">👥 Manage Consumers</h2>
+          <p className="text-gray-600">View and manage consumer accounts.</p>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-xl font-semibold mb-2 text-orange-700">
-            Farmers ({farmers.length})
-          </h2>
-          <ul className="space-y-1 text-sm">
-            {farmers.map((f) => (
-              <li key={f._id}>{f.name} - {f.email}</li>
-            ))}
-          </ul>
+        <div
+          onClick={() => navigate("/admin/farmers")}
+          className="cursor-pointer bg-gradient-to-br from-orange-100 to-yellow-100 p-6 rounded-lg shadow hover:shadow-xl transition"
+        >
+          <h2 className="text-xl font-bold text-orange-700 mb-2">👨‍🌾 Manage Farmers</h2>
+          <p className="text-gray-600">View and manage farmer profiles.</p>
         </div>
 
-        <div className="bg-white p-4 rounded shadow">
-          <h2 className="text-xl font-semibold mb-2 text-purple-700">
-            Products ({products.length})
-          </h2>
-          <ul className="space-y-1 text-sm">
-            {products.map((p) => (
-              <li key={p._id}>
-                {p.title} - ₹{p.price}
-                <button
-                  onClick={() => deleteProduct(p._id)}
-                  className="ml-2 bg-red-500 text-white px-2 py-0.5 rounded hover:bg-red-600"
-                >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
+        <div
+          onClick={() => navigate("/admin/products")}
+          className="cursor-pointer bg-gradient-to-br from-purple-100 to-pink-100 p-6 rounded-lg shadow hover:shadow-xl transition"
+        >
+          <h2 className="text-xl font-bold text-purple-700 mb-2">🛒 Manage Products</h2>
+          <p className="text-gray-600">View or delete listed products.</p>
         </div>
-      </section>
+      </div>
 
-      {/* Optional full product cards */}
-      <div className="bg-white p-6 rounded shadow mb-8">
+      {/* List All Products */}
+      <div className="bg-white rounded-lg shadow p-6 mb-20">
+        <h2 className="text-2xl font-bold mb-4 text-emerald-700">📦 All Products</h2>
         <AllProducts />
       </div>
 
-      {/* Optional user manager with restrict/ban/unban */}
-      <AdminUserManager />
+      {/* Chat Button - Bottom Right */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <button
+          onClick={() => navigate("/chat")}
+          className="w-14 h-14 bg-gradient-to-br from-emerald-500 to-green-600 rounded-full shadow-lg hover:shadow-2xl flex items-center justify-center text-white text-2xl hover:scale-110 transition-all"
+        >
+          💬
+        </button>
+      </div>
     </div>
   );
 };

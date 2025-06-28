@@ -10,7 +10,6 @@ export const deleteProductFarmer = async (req, res) => {
     if (!product) return res.status(403).json({ message: "Not your product." });
 
     await product.deleteOne();
-    console.log("Product deleted:", product._id);
     res.json({ message: "Product deleted." });
   } catch (err) {
     console.error(err);
@@ -22,7 +21,6 @@ export const deleteProductFarmer = async (req, res) => {
 export const deleteProductAdmin = async (req, res) => {
   try {
     const result = await Product.findByIdAndDelete(req.params.productId);
-    console.log("Admin deleted product:", req.params.productId);
     if (!result) return res.status(404).json({ message: "Product not found." });
     res.json({ message: "Product deleted by admin." });
   } catch (err) {

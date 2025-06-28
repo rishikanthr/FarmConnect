@@ -16,6 +16,9 @@ import ImagePredictor from "./components/ImagePredictor";
 import WalletPage from "./pages/WalletPage";
 import AllProducts from "./components/AllProducts";
 import OrdersTracker from "./pages/OrdersTracker";
+import AdminConsumers from "./components/AdminConsumers";
+import AdminFarmers from "./components/AdminFarmers";
+import AdminProducts from "./components/AdminProducts";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -49,7 +52,9 @@ const App = () => {
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/all-products" element={<AllProducts />} />  
           <Route path="/order-tracker" element={<OrdersTracker />} />
-
+          <Route path="/admin/consumers" element={<AdminConsumers />} />
+          <Route path="/admin/farmers" element={<AdminFarmers />} />
+          <Route path="/admin/products" element={<AdminProducts />} />
         </Routes>
       </Router>
   );
