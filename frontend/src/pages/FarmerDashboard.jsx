@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import LogoutButton from "../components/LogOutButton";
 import AddProduct from "../components/AddProduct";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const FarmerDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null);
   const [error, setError] = useState("");
@@ -12,7 +14,7 @@ const FarmerDashboard = () => {
   const fetchDashboard = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:3000/api/farmer/dashboard", {
+      const res = await axios.get(`${BASE_URL}/api/farmer/dashboard`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDashboardData(res.data);

@@ -2,6 +2,8 @@ import { useState } from "react";
 import axios from "axios";
 import AddToCartButton from "./AddToCartButton";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const SearchByTitle = () => {
   const [title, setTitle] = useState("");
   const [results, setResults] = useState([]);
@@ -19,7 +21,7 @@ const SearchByTitle = () => {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/products/by-title/${encodeURIComponent(title)}`
+        `${BASE_URL}/api/products/by-title/${encodeURIComponent(title)}`
       );
       setResults(res.data);
     } catch (err) {

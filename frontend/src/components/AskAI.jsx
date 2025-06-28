@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function AskAI() {
   const [question, setQuestion] = useState("");
   const [answer, setAnswer] = useState("");
@@ -12,7 +14,7 @@ export default function AskAI() {
     setAnswer("");
 
     try {
-      const res = await axios.post("http://localhost:3000/api/ai", { question });
+      const res = await axios.post(`${BASE_URL}/api/ai`, { question });
       setAnswer(res.data.answer);
     } catch (err) {
       console.error(err);

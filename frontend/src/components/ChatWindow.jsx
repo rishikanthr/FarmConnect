@@ -3,7 +3,9 @@ import { Send, Check, CheckCheck, Smile, Paperclip } from "lucide-react";
 import io from "socket.io-client";
 import axios from "axios";
 
-const socket = io("http://localhost:3000", { autoConnect: false });
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+const socket = io(`${BASE_URL}`, { autoConnect: false });
 
 export default function ChatWindow({ partner }) {
   const [msgs, setMsgs] = useState([]);
@@ -25,7 +27,7 @@ export default function ChatWindow({ partner }) {
     (async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:3000/api/chat/with/${partner._id}`,
+          `${BASE_URL}/api/chat/with/${partner._id}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setMsgs(data);
@@ -72,7 +74,7 @@ export default function ChatWindow({ partner }) {
     if (!text.trim() || !partner?._id) return;
     try {
       const { data } = await axios.post(
-        "http://localhost:3000/api/chat",
+        `${BASE_URL}/api/chat`,
         { recipientId: partner._id, message: text },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const ImagePredictor = () => {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -22,7 +24,7 @@ const ImagePredictor = () => {
     formData.append("file", file);
 
     try {
-      const res = await axios.post("http://localhost:3000/api/predict", formData, {
+      const res = await axios.post(`${BASE_URL}/api/predict`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setPrediction(res.data);

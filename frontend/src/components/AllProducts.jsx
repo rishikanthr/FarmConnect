@@ -4,13 +4,15 @@ import AddToCartButton from "./AddToCartButton";
 import CartButton from "./CartButton";
 import { Leaf } from "lucide-react";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AllProducts = ({ showCartButton = true }) => {
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/api/products/getAll")
+      .get(`${BASE_URL}/api/products/getAll`)
       .then((res) => setProducts(res.data))
       .catch((err) => console.error("Product fetch error:", err));
   }, []);

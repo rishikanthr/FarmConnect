@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 export default function UserSearch({ onSelect }) {
   const [query, setQuery] = useState("");
   const [result, setResult] = useState(null);
@@ -14,7 +16,7 @@ export default function UserSearch({ onSelect }) {
 
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/chat/find?query=${query}`,
+        `${BASE_URL}/api/chat/find?query=${query}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setResult(res.data);

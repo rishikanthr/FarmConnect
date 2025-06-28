@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const SearchByFarmer = () => {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState("id");
@@ -18,8 +20,8 @@ const SearchByFarmer = () => {
 
     const url =
       mode === "id"
-        ? `http://localhost:3000/api/products/getByFarmer/${encodeURIComponent(query)}`
-        : `http://localhost:3000/api/products/by-farmer-name/${encodeURIComponent(query)}`;
+        ? `${BASE_URL}/api/products/getByFarmer/${encodeURIComponent(query)}`
+        : `${BASE_URL}/api/products/by-farmer-name/${encodeURIComponent(query)}`;
 
     try {
       const res = await axios.get(url);

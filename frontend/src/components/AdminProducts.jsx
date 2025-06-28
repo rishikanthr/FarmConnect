@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaTrashAlt, FaLeaf, FaSearch } from "react-icons/fa";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AdminProducts = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,7 +11,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     const token = localStorage.getItem("token");
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/allProducts", {
+      const res = await axios.get(`${BASE_URL}/api/admin/allProducts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);
@@ -21,7 +23,7 @@ const AdminProducts = () => {
   const deleteProduct = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`http://localhost:3000/api/products/admin/delete/${id}`, {
+      await axios.delete(`${BASE_URL}/api/products/admin/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts((prev) => prev.filter((p) => p._id !== id));
