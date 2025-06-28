@@ -111,35 +111,42 @@ const ConsumerDashboard = () => {
           </div>
         </div>
 
-        {/* Navigation Buttons */}
-        <div className="grid md:grid-cols-3 gap-8">
+        {/* Feature Buttons */}
+        <div className="grid sm:grid-cols-2 gap-6">
           <button
             onClick={() => navigate("/search-title")}
-            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-lg transition duration-300"
+            className="bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300"
           >
             🔍 Search by Title
           </button>
 
           <button
             onClick={() => navigate("/search-farmer")}
-            className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-lg transition duration-300"
+            className="bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300"
           >
-            🔍 Search by Farmer
+            🧑‍🌾 Search by Farmer
           </button>
 
           <button
             onClick={() => navigate("/ask-ai")}
-            className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-lg transition duration-300"
+            className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300"
           >
             🤖 Ask AI Assistant
           </button>
+
+          <button
+            onClick={() => navigate("/order-tracker")}
+            className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold px-6 py-4 rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300"
+          >
+            📦 Track My Orders
+          </button>
         </div>
 
-        {/* Explore All Products */}
-        <div className="flex justify-center mt-12">
+        {/* All Products Center-Aligned */}
+        <div className="mt-12 flex justify-center">
           <button
             onClick={() => navigate("/all-products")}
-            className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-8 py-4 rounded-xl shadow-lg transition"
+            className="bg-gradient-to-r from-yellow-500 to-amber-600 text-white font-semibold px-8 py-5 rounded-3xl shadow-lg hover:shadow-xl hover:-translate-y-1 transform transition-all duration-300 text-lg"
           >
             🌽 Explore All Products
           </button>

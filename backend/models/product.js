@@ -1,15 +1,19 @@
+// backend/models/Product.js
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
     farmerId: { type: String, required: true },
+    farmerName: String, // 🆕
+    farmerEmail: String, // 🆕
+    farmerLocation: String, // 🆕
     title: String,
     description: String,
     price: Number,
     stock: Number,
     category: String,
     certifiedOrganic: Boolean,
-    imageURL: String, // will store uploaded image URL or path
+    imageURL: String,
   },
   { timestamps: true }
 );

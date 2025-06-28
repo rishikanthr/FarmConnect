@@ -1,25 +1,23 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import AddToCartButton from "./AddToCartButton";
-import CartButton from "./CartButton"; // ✅ import CartButton
+import CartButton from "./CartButton";
 import { Leaf } from "lucide-react";
-import { useNavigate } from "react-router-dom";
 
 const AllProducts = ({ showCartButton = true }) => {
   const [products, setProducts] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
-  const navigate = useNavigate();
 
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/products/getAll")
       .then((res) => setProducts(res.data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error("Product fetch error:", err));
   }, []);
 
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      {/* Cart & Title */}
+      {/* Title & Cart Button */}
       <div className="flex justify-between items-center mb-8">
         <h2 className="text-3xl font-extrabold text-green-600 tracking-wide">
           <span className="inline-flex items-center gap-2">
@@ -27,10 +25,7 @@ const AllProducts = ({ showCartButton = true }) => {
             Farm Fresh Products
           </span>
         </h2>
-
-        {showCartButton && (
-          <CartButton /> // ✅ renders the nice styled Cart button
-        )}
+        {showCartButton && <CartButton />}
       </div>
 
       {/* Products Grid */}
@@ -68,6 +63,23 @@ const AllProducts = ({ showCartButton = true }) => {
                 >
                   {p.certifiedOrganic ? "Yes ✅" : "No ❌"}
                 </span>
+              </div>
+
+              {/* ✅ Farmer Info */}
+              <div className="text-sm text-gray-700 pt-2 space-y-1">
+                <p>
+                  👨‍🌾 Farmer:{" "}
+                  <span className="font-medium text-indigo-700">
+                    {p.farmerName || "Unknown"}
+                  </span>
+                </p>
+                <p className="text-xs text-gray-500">
+                  📍 Location: {p.farmerLocation || "Unknown"}
+                </p>
+                <p className="text-xs text-gray-500">
+                  🆔 ID:{" "}
+                  <span className="font-mono text-gray-800">{p.farmerId}</span>
+                </p>
               </div>
 
               <div className="pt-3 flex justify-end">

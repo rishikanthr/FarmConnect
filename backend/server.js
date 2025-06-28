@@ -20,6 +20,7 @@ import predictRoute from "./routes/predictRoute.js";
 import aiRoute from "./routes/aiRoute.js";
 import cartRoute from "./routes/cartRoute.js";
 import walletRoutes from "./routes/walletRoute.js";
+import orderRoutes from "./routes/orderRoute.js";
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use("/api/ai", aiRoute);
 app.use("/api/cart", cartRoute);
 app.use("/api/wallet", walletRoutes);
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+app.use("/api/orders", orderRoutes);
 
 // ────────────── HTTP + Socket.IO setup ────────────
 const httpServer = http.createServer(app);

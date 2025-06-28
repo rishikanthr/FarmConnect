@@ -15,6 +15,7 @@ import AskAI from "./components/AskAI";
 import ImagePredictor from "./components/ImagePredictor";
 import WalletPage from "./pages/WalletPage";
 import AllProducts from "./components/AllProducts";
+import OrdersTracker from "./pages/OrdersTracker";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -47,6 +48,8 @@ const App = () => {
           <Route path="/ask-ai" element={<AskAI />} />
           <Route path="/wallet" element={<WalletPage />} />
           <Route path="/all-products" element={<AllProducts />} />  
+          <Route path="/order-tracker" element={<OrdersTracker />} />
+
         </Routes>
       </Router>
   );

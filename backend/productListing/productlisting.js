@@ -53,13 +53,18 @@ export const addProduct = async (req, res) => {
 // Get all products
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find({ stock: { $gte: 0 } })
+      .populate("farmerId", "name email location") // 👈 only selected fields
+      .sort({ updatedAt: -1 });
+    console.log(products);
     res.json(products);
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: err.message });
+    console.error("Error fetching products:", err);
+    res.status(500).json({ error: "Failed to fetch products" });
   }
 };
+ 
+
 
 // Get products by farmer
 export const getProductsByFarmer = async (req, res) => {
