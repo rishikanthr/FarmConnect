@@ -1,6 +1,8 @@
 import Product from "../models/product.js";
 import User from "../models/user.js";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
 
 /* Add new product with image upload */
 export const addProduct = async (req, res) => {
@@ -21,9 +23,10 @@ export const addProduct = async (req, res) => {
       return res.status(403).json({ error: "Only farmers can add products" });
     }
 
+    const baseURL = process.env.BASE_URL;
     // Get image path
     const imageURL = req.file
-      ? `http://localhost:3000/uploads/${req.file.filename}`
+      ? `${baseURL}/uploads/${req.file.filename}`
       : "";
 
     const newProduct = new Product({
