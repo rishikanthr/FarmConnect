@@ -16,21 +16,23 @@ export const addProduct = async (req, res) => {
       certifiedOrganic,
     } = req.body;
 
+    // Find the farmer user
     const farmer = await User.findById(farmerId);
     if (!farmer || farmer.role !== "farmer") {
       return res.status(403).json({ error: "Only farmers can add products" });
     }
 
-    // Get image path
+    // Get the image URL
     const imageURL = req.file
-      ? `http://localhost:3000/uploads/${req.file.filename}`
+      ? `https://farmconnect-backend-gbcy.onrender.com/uploads/${req.file.filename}`
       : "";
 
+    // ✅ Make sure you assign the ObjectId
     const newProduct = new Product({
-      farmerId,
-      farmerName: farmer.name,            // ✅ embed farmer name
-      farmerEmail: farmer.email,          // ✅ embed farmer email
-      farmerLocation: farmer.location,    // ✅ embed farmer location
+      farmerId: farmer._id,               // 🔥 use ObjectId not string
+      farmerName: farmer.name,
+      farmerEmail: farmer.email,
+      farmerLocation: farmer.location,
       title,
       description,
       price,
@@ -43,6 +45,7 @@ export const addProduct = async (req, res) => {
     await newProduct.save();
     console.log("✅ New product added:", newProduct);
     res.status(201).json(newProduct);
+
   } catch (err) {
     console.error("❌ Error adding product:", err.message);
     res.status(500).json({ error: err.message });
@@ -53,18 +56,24 @@ export const addProduct = async (req, res) => {
 
 
 // Get all products
+// Example: productController.js
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({ stock: { $gte: 0 } })
-      .populate("farmerId", "name email location") // 👈 only selected fields
-      .sort({ updatedAt: -1 });
-    console.log(products);
-    res.json(products);
+    const products = await Product.find().populate("farmerId", "name email location"); // Only select fields you need
+    res.json(
+      products.map((p) => ({
+        ...p._doc,
+        farmerName: p.farmerId?.name || "Unknown",
+        farmerEmail: p.farmerId?.email || "Unknown",
+        farmerLocation: p.farmerId?.location || "Unknown",
+      }))
+    );
   } catch (err) {
-    console.error("Error fetching products:", err);
+    console.error("Fetch error:", err);
     res.status(500).json({ error: "Failed to fetch products" });
   }
 };
+
  
 
 
