@@ -10,12 +10,20 @@ const Home = () => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     setShow(true);
+
+    // ✅ Google Analytics page view
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "page_view", {
+        page_path: window.location.pathname,
+        page_title: "Home Page",
+      });
+    }
+
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-lime-50 via-emerald-100 to-teal-100 flex flex-col items-center justify-center relative text-center overflow-hidden">
-
       {/* Animated Background Circles */}
       <div className="fixed inset-0 pointer-events-none z-0">
         <div
