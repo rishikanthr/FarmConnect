@@ -4,6 +4,8 @@ import axios from "axios";
 import LogOutButton from "../components/LogOutButton";
 import AllProducts from "../components/AllProducts"; // This shows the full product list
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AdminDashboard = () => {
   const navigate = useNavigate();
   const [products, setProducts] = useState([]);
@@ -12,7 +14,7 @@ const AdminDashboard = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/allProducts", {
+      const res = await axios.get(`${BASE_URL}/api/admin/allProducts`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts(res.data);

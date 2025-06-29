@@ -4,6 +4,8 @@ import axios from "axios";
 import FormData from "form-data";
 import fs from "fs";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
 
 const router = express.Router();
 const upload = multer({ dest: "uploads/" });
@@ -20,7 +22,7 @@ router.post("/", upload.single("file"), async (req, res) => {
       contentType: mimeType,
     });
 
-    const response = await axios.post("http://localhost:8000/predict", formData, {
+    const response = await axios.post(`${process.env.MODEL_URL}/predict`, formData, {
       headers: {
         ...formData.getHeaders(),
       },

@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import LogOutButton from "../components/LogOutButton";
 import CartButton from "../components/CartButton";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const ConsumerDashboard = () => {
   const [consumerData, setConsumerData] = useState(null);
   const [error, setError] = useState("");
@@ -13,7 +15,7 @@ const ConsumerDashboard = () => {
     (async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/api/consumer/dashboard", {
+        const res = await axios.get(`${BASE_URL}/api/consumer/dashboard`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setConsumerData(res.data);

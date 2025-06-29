@@ -1,6 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AddToCartButton = ({ userId, productId }) => {
   const [loading, setLoading] = useState(false);
   const [quantity, setQuantity] = useState(1);
@@ -9,7 +11,7 @@ const AddToCartButton = ({ userId, productId }) => {
     if (!userId) return alert("Please login to add to cart.");
     setLoading(true);
     try {
-      await axios.post("http://localhost:3000/api/cart/add", {
+      await axios.post(`${BASE_URL}/api/cart/add`, {
         userId,
         productId,
         quantity,

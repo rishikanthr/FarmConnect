@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const CartPage = () => {
   const [cart, setCart] = useState(null);
   const [error, setError] = useState("");
@@ -11,18 +13,18 @@ const CartPage = () => {
   useEffect(() => {
     if (!userId) return;
     axios
-      .get(`http://localhost:3000/api/cart/${userId}`)
+      .get(`${BASE_URL}/api/cart/${userId}`)
       .then((res) => setCart(res.data))
       .catch(() => setError("Failed to load cart"));
   }, [userId]);
 
   const handleRemove = async (productId) => {
     try {
-      await axios.post("http://localhost:3000/api/cart/remove", {
+      await axios.post(`${BASE_URL}/api/cart/remove`, {
         userId,
         productId,
       });
-      const res = await axios.get(`http://localhost:3000/api/cart/${userId}`);
+      const res = await axios.get(`${BASE_URL}/api/cart/${userId}`);
       setCart(res.data);
     } catch {
       alert("Failed to remove item");
@@ -31,9 +33,9 @@ const CartPage = () => {
 
   const handleCheckout = async () => {
     try {
-      await axios.post("http://localhost:3000/api/cart/checkout", { userId });
+      await axios.post(`${BASE_URL}/api/cart/checkout`, { userId });
       alert("Purchase successful");
-      const res = await axios.get(`http://localhost:3000/api/cart/${userId}`);
+      const res = await axios.get(`${BASE_URL}/api/cart/${userId}`);
       setCart(res.data);
     } catch (err) {
       console.error(err.response?.data || err);

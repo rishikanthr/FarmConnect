@@ -1,6 +1,8 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AddProduct = ({ onProductAdded }) => {
   const [form, setForm] = useState({
     title: "",
@@ -48,7 +50,7 @@ const AddProduct = ({ onProductAdded }) => {
       });
       formData.append("farmerId", user._id);
 
-      await axios.post("http://localhost:3000/api/products/add", formData, {
+      await axios.post(`${BASE_URL}/api/products/add`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

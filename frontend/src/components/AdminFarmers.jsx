@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { FaBan, FaUnlock, FaHourglassHalf, FaUser, FaEnvelope, FaIdCard } from "react-icons/fa";
 import { MdAgriculture } from "react-icons/md";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AdminFarmers = () => {
   const [farmers, setFarmers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,7 +14,7 @@ const AdminFarmers = () => {
 
   const fetchFarmers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/allFarmers", {
+      const res = await axios.get(`${BASE_URL}/api/admin/allFarmers`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setFarmers(res.data);
@@ -145,7 +147,7 @@ const AdminFarmers = () => {
                       <button
                         onClick={() =>
                           act(
-                            `http://localhost:3000/api/admin/users/${selectedFarmer._id}/restrict/1d`,
+                            `${BASE_URL}/api/admin/users/${selectedFarmer._id}/restrict/1d`,
                             "Restricted for 1 day"
                           )
                         }
@@ -157,7 +159,7 @@ const AdminFarmers = () => {
                       <button
                         onClick={() =>
                           act(
-                            `http://localhost:3000/api/admin/users/${selectedFarmer._id}/restrict/7d`,
+                            `${BASE_URL}/api/admin/users/${selectedFarmer._id}/restrict/7d`,
                             "Restricted for 7 days"
                           )
                         }
@@ -169,7 +171,7 @@ const AdminFarmers = () => {
                       <button
                         onClick={() =>
                           act(
-                            `http://localhost:3000/api/admin/users/${selectedFarmer._id}/ban`,
+                            `${BASE_URL}/api/admin/users/${selectedFarmer._id}/ban`,
                             "User banned",
                             true
                           )
@@ -188,7 +190,7 @@ const AdminFarmers = () => {
                   <button
                     onClick={() =>
                       act(
-                        `http://localhost:3000/api/admin/users/${selectedFarmer._id}/unban`,
+                        `${BASE_URL}/api/admin/users/${selectedFarmer._id}/unban`,
                         "User unbanned"
                       )
                     }

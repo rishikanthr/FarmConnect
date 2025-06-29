@@ -4,6 +4,8 @@ import toast from "react-hot-toast";
 import { FaBan, FaUnlock, FaHourglassHalf, FaUser, FaEnvelope, FaIdBadge } from "react-icons/fa";
 import { MdPeopleAlt } from "react-icons/md";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const AdminConsumers = () => {
   const [consumers, setConsumers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -12,7 +14,7 @@ const AdminConsumers = () => {
 
   const fetchConsumers = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/api/admin/allConsumers", {
+      const res = await axios.get(`${BASE_URL}/api/admin/allConsumers`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setConsumers(res.data);
@@ -147,7 +149,7 @@ const AdminConsumers = () => {
                       <button
                         onClick={() =>
                           act(
-                            `http://localhost:3000/api/admin/users/${selectedConsumer._id}/restrict/1d`,
+                            `${BASE_URL}/api/admin/users/${selectedConsumer._id}/restrict/1d`,
                             "Restricted for 1 day"
                           )
                         }
@@ -159,7 +161,7 @@ const AdminConsumers = () => {
                       <button
                         onClick={() =>
                           act(
-                            `http://localhost:3000/api/admin/users/${selectedConsumer._id}/restrict/7d`,
+                            `${BASE_URL}/api/admin/users/${selectedConsumer._id}/restrict/7d`,
                             "Restricted for 7 days"
                           )
                         }
@@ -171,7 +173,7 @@ const AdminConsumers = () => {
                       <button
                         onClick={() =>
                           act(
-                            `http://localhost:3000/api/admin/users/${selectedConsumer._id}/ban`,
+                            `${BASE_URL}/api/admin/users/${selectedConsumer._id}/ban`,
                             "User banned",
                             true
                           )
@@ -190,7 +192,7 @@ const AdminConsumers = () => {
                   <button
                     onClick={() =>
                       act(
-                        `http://localhost:3000/api/admin/users/${selectedConsumer._id}/unban`,
+                        `${BASE_URL}/api/admin/users/${selectedConsumer._id}/unban`,
                         "User unbanned"
                       )
                     }

@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Trash2, Edit3, Package, Star, Award, DollarSign, ShoppingCart } from "lucide-react";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const FarmerProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +26,7 @@ const FarmerProductsPage = () => {
     const fetchProducts = async () => {
       if (!farmerId) return;
       try {
-        const res = await axios.get(`http://localhost:3000/api/products/getByFarmer/${farmerId}`, {
+        const res = await axios.get(`${BASE_URL}/api/products/getByFarmer/${farmerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setProducts(res.data || []);
@@ -41,7 +43,7 @@ const FarmerProductsPage = () => {
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this product?")) return;
     try {
-      await axios.delete(`http://localhost:3000/api/products/delete/${id}`, {
+      await axios.delete(`${BASE_URL}/api/products/delete/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setProducts((prev) => prev.filter((p) => p._id !== id));

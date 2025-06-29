@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const OrdersTracker = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -9,7 +11,7 @@ const OrdersTracker = () => {
     (async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:3000/api/orders/track", {
+        const res = await axios.get(`${BASE_URL}/api/orders/track`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setOrders(res.data);

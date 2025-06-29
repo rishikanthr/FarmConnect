@@ -1,6 +1,8 @@
 import { use, useEffect, useState } from "react";
 import axios from "axios";
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const WalletSection = ({ userId }) => {
   const [wallet, setWallet] = useState(null);
   const [amount, setAmount] = useState("");
@@ -12,7 +14,7 @@ const WalletSection = ({ userId }) => {
   const fetchWallet = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.get(`http://localhost:3000/api/wallet/${userId}`);
+      const res = await axios.get(`${BASE_URL}/api/wallet/${userId}`);
       console.log(userId);
       setWallet(res.data);
     } catch (err) {
@@ -30,7 +32,7 @@ const WalletSection = ({ userId }) => {
 
     setIsTopping(true);
     try {
-      const res = await axios.post("http://localhost:3000/api/wallet/topup", {
+      const res = await axios.post(`${BASE_URL}/api/wallet/topup`, {
         userId,
         amount: amt,
       });
